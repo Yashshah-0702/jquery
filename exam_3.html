@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.4.js"
+    integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <select name="" id="price">
+    <option value="Select">Select</option>
+    <option value="100">between 100 & 200</option>
+    <option value="200">between 200 & 300</option>
+    <option value="300">between 300 & 400</option>
+  </select>
+    <div class="row">
+
+    </div>
+   <p>Total Price is <span id="checkout"></span></p>
+    
+  
+  
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+  <script>
+    $.ajax({
+        url:'https://fakestoreapi.com/products',
+        method:'GET',
+        success:function(response,status){
+            console.log(response)
+            var a=0
+            for(let i=0;i<response.length;i++){
+             
+                $('.row').append(`<div class="col-lg-3 col-md-6 col-sm-12" ><div class="card"><div class="card-img"><img src=${response[i]["image"]} class="img img-fluid" width="300px" height="400px"></div><div class="card-body" > <h3>${response[i]["title"]}</h3> <br><br>  ${response[i]["description"]} <br> Rating:- ${response[i]["rating"]["rate"]} <br>Count:-${response[i]["rating"]["count"]} <br> Price:-<b> ${response[i]["price"]}$ </b></div></div></div>`)
+                a = a+response[i].price
+                // var abc = response.filter((p)=>{
+                //   return p.price<100
+                // })
+                // var ab = abc.sort()
+            }
+            
+            
+            
+          //   $('#100').click(function(){
+          //     var b=0;
+          //     $('.row').html('')
+          //     for(let j=0;j<ab.length;j++){
+          //         $('.row').append(`<div class="col-lg-3 col-md-6 col-sm-12" ><div class="card"><div class="card-img"><img src=${ab[j]["image"]} class="img img-fluid" width="300px" height="400px"></div><div class="card-body" > <h3>${ab[j]["title"]}</h3> <br><br>  ${ab[j]["description"]} <br> Rating:- ${ab[j]["rating"]["rate"]} <br>Count:-${ab[j]["rating"]["count"]} <br> Price:-<b> ${ab[j]["price"]}$ </b></div></div></div>`)
+          //         b = b+ab[j].price
+          //       }
+
+          //  $('#checkout').append(b)
+
+          //   })
+
+            $('#price').change(function(){
+              let sc = $('#price').val()
+              if(sc==100){
+                var ab=response.filter((p)=>{
+                 return p.price>100 && p.price<200
+
+                })
+                $('.row').html('')
+              for(let j=0;j<ab.length;j++){
+                  $('.row').append(`<div class="col-lg-3 col-md-6 col-sm-12" ><div class="card"><div class="card-img"><img src=${ab[j]["image"]} class="img img-fluid" width="300px" height="400px"></div><div class="card-body" > <h3>${ab[j]["title"]}</h3> <br><br>  ${ab[j]["description"]} <br> Rating:- ${ab[j]["rating"]["rate"]} <br>Count:-${ab[j]["rating"]["count"]} <br> Price:-<b> ${ab[j]["price"]}$ </b></div></div></div>`)
+                 
+                }
+              }
+              else if(sc == "Select"){
+                // var aba=response.filter((p)=>{
+                //  return p.price>200 && p.price<300
+                // })
+                // $('.row').html('')
+                // for(let k=0;k<aba.length;k++){
+                //   $('.row').append(`<div class="col-lg-3 col-md-6 col-sm-12" ><div class="card"><div class="card-img"><img src=${aba[k]["image"]} class="img img-fluid" width="300px" height="400px"></div><div class="card-body" > <h3>${aba[k]["title"]}</h3> <br><br>  ${aba[k]["description"]} <br> Rating:- ${aba[k]["rating"]["rate"]} <br>Count:-${aba[k]["rating"]["count"]} <br> Price:-<b> ${aba[k]["price"]}$ </b></div></div></div>`)
+                 
+                // }
+                for(let i=0;i<response.length;i++){
+             
+             $('.row').append(`<div class="col-lg-3 col-md-6 col-sm-12" ><div class="card"><div class="card-img"><img src=${response[i]["image"]} class="img img-fluid" width="300px" height="400px"></div><div class="card-body" > <h3>${response[i]["title"]}</h3> <br><br>  ${response[i]["description"]} <br> Rating:- ${response[i]["rating"]["rate"]} <br>Count:-${response[i]["rating"]["count"]} <br> Price:-<b> ${response[i]["price"]}$ </b></div></div></div>`)
+             
+             
+         }
+
+              }
+            })
+            // console.log(ab)
+            // console.log(a)
+        }
+    })
+
+   
+  </script>
+</body>
+
+</html>

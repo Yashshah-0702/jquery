@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.js"
+        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <script>
+        let array = [{ productId: 1, Name: "entertainment", parentId: "null" },
+        { productId: 2, Name: "food", parentId: "null" },
+        { productId: 3, Name: "toy", parentId: 1 },
+        { productId: 4, Name: "milk", parentId: 1 },
+        { productId: 5, Name: "vegetables", parentId: "null" }, 
+        { productId: 6, Name: "table", parentId: 2 }
+        ]
+    
+        let main=$('<ul></ul>')
+        var head = array.filter((d)=>d["parentId"]=== "null");
+    
+        $(head).each((index, data)=>{
+            let child = $("<li></li>")
+            let childhead = $("<ul></ul>")
+            $(child).text(data.Name);
+    
+            array.forEach(dt=>{
+                let innchild = $('<li></li>')
+                if(dt.parentId == data.productId){
+                    $(innchild).text(dt.Name).appendTo(childhead)
+                }
+            })
+            $(main).append(child).append(childhead)
+        })
+        $("body").append(main)
+    </script>
+   
+</body>
+
+
+</html>

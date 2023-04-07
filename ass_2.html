@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.4.js"
+        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <label for="fname">UserName:</label>
+    <input type="text" name="fname" id="username"> <br>
+    <label for="Email">Email ID:</label>
+    <input type="text" name="email" id="email"> <br>
+    <label for="Gender">select Gender:</label>
+    <input type="radio" name="gender" value="male"> Male
+    <input type="radio" name="gender" value="female">Female <br>
+    <label for="Status">Status:</label>
+    <input type="radio" name="status" value="active">Active
+    <input type="radio" name="status" value="inactive">Inactive
+    <button onclick="get()">get</button>
+    <button onclick="post()">Post</button>
+    <button id="update" class="d-none">Update</button>
+
+    <table class="table ">
+        <caption></caption>
+        <tr>
+            <th>Name</th>
+            <th>Mail</th>
+            <th>Gender</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        <tbody id="tabledata">
+
+        </tbody>
+    </table>
+
+    <script>
+
+        var allData;
+
+
+
+
+        // post method
+        function post() {
+            let name1 = $("#username").val()
+            let email1 = $("#email").val()
+            let gen = $("input[name='gender']:checked").val()
+            let stat = $("input[name='status']:checked").val()
+            console.log(name1, email1, gen, stat)
+            var settings = {
+                "url": "https://gorest.co.in/public/v2/users",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Authorization": "Bearer 35760bf6c5f75f98fcc0c6eb61e6459ff116e35f9ab26c1baf4ee7517e454e38",
+                    "Content-Type": "application/json"
+                },
+                "data": JSON.stringify({
+
+                    name: name1,
+                    email: email1,
+                    gender: gen,
+                    status: stat,
+                }),
+            };
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+                get();
+            })
+                .fail((error) => {
+                    console.log(error)
+                })
+        }
+
+
+        // get method
+        function get() {
+            var settings = {
+                "url": "https://gorest.co.in/public/v2/users",
+                "method": "GET",
+                "timeout": 0,
+                "headers": {
+                    "Authorization": "Bearer 35760bf6c5f75f98fcc0c6eb61e6459ff116e35f9ab26c1baf4ee7517e454e38"
+                },
+            };
+
+            $.ajax(settings).done(function (response) {
+                var raw;
+                $('tbody>tr').remove();
+                var i = 0;
+                response.forEach((data) => {
+                    raw += `<tr> <td>${data.name}</td><td>${data.email}</td><td>${data.gender}</td><td>${data.status}</td><td>
+                                <button class="btn btn-info" id="edit" onclick="editdata(${i})" >Edit</button>
+                                <button class="btn btn-danger" id="delete" onclick="deletedata(${i})" >Delete</button>
+                            </td></tr>`;
+                    i++;
+                });
+                $('#tabledata').append(raw);
+                allData = response;
+            });
+        }
+
+
+        // Delete Method
+        function deletedata(id) {
+            var remove = allData[id].id;
+            var settings = {
+                "url": "https://gorest.co.in/public/v2/users/" + remove,
+                "method": "DELETE",
+                "timeout": 0,
+                "headers": {
+                    "Authorization": "Bearer 35760bf6c5f75f98fcc0c6eb61e6459ff116e35f9ab26c1baf4ee7517e454e38",
+                    "Content-Type": "application/json",
+                },
+            };
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+                get();
+            });
+        }
+
+
+        // Update Method
+        function editdata(id) {
+            var edit = allData[id];
+            $('#update').removeClass('d-none');
+            $('#username').val(edit.name)
+            $('#email').val(edit.email)
+            $('#' + edit.gender).prop('checked', true)
+            $('#' + edit.status).prop('checked', true)
+
+            $('#update').click(function () {
+                let name2 = $("#username").val()
+                let email2 = $("#email").val()
+                let gen1 = $("input[name='gender']:checked").val()
+                let stat1 = $("input[name='status']:checked").val()
+
+                var settings = {
+                    "url": "https://gorest.co.in/public/v2/users/" + edit.id,
+                    "method": "PATCH",
+                    "timeout": 0,
+                    "headers": {
+                        "Authorization": "Bearer 35760bf6c5f75f98fcc0c6eb61e6459ff116e35f9ab26c1baf4ee7517e454e38",
+                        "Content-Type": "application/json"
+                    },
+                    "data": JSON.stringify({
+                        "name": name2,
+                        "email": email2,
+                        "gender": gen1,
+                        "status": stat1,
+                    }),
+                };
+                $.ajax(settings).done(function (response) {
+                    console.log(response);
+                    $('#update').addClass('d-none');
+                    get()
+                });
+
+            })
+        }
+
+
+
+
+
+
+        // $(document).ready(function () {
+        //     var allData;
+        //     $('#get').click(function () {
+        //         var settings = {
+        //             "url": "https://gorest.co.in/public/v2/users",
+        //             "method": "GET",
+        //             "timeout": 0,
+        //             "headers": {
+        //                 "Authorization": "Bearer 35760bf6c5f75f98fcc0c6eb61e6459ff116e35f9ab26c1baf4ee7517e454e38"
+        //             },
+        //         };
+
+        //         $.ajax(settings).done(function (response) {
+        //             var raw;
+        //             $('tbody>tr').remove();
+        //             var i = 0;
+        //             response.forEach((data) => {
+        //                 raw += `<tr> <td>${data.name}</td><td>${data.email}</td><td>${data.gender}</td><td>${data.status}</td><td>
+        //                         <button class="btn btn-info" id="edit" onclick="editdata(${i})" >Edit</button>
+        //                         <button class="btn btn-danger" id="delete" onclick="deletedata(${i})" >Delete</button>
+        //                     </td></tr>`;
+        //                 i++;
+        //             });
+        //             $('#tabledata').append(raw);
+        //             allData = response;
+        //         });
+        //     })
+        // })
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+        </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+        </script>
+</body>
+
+</html>

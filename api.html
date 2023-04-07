@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.4.js"
+        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    <table id="table"></table>
+
+    <button id="show">Show Data</button>
+    <a href="/api.html" id="refresh"> <button> Refresh</button></a>
+
+    <script>
+        $('#refresh').hide()
+        $('#show').click(function(){$.ajax({
+            url:"https://gorest.co.in/public/v2/users",
+            type: "Get",
+            beforeSend:function(){
+                console.log("data is loaded")
+
+            },
+            success:function(response,status){
+                console.log(response)
+                for(let i=0;i<response.length;i++){
+                   
+                  $('#table').append( `<tr><td>${response[i]["name"]}</td><td>${response[i]["email"]}</td><td>${response[i]["gender"]}</td><td>${response[i]["status"]}</td><td>
+                                <button class="btn btn-info" id="edit" onclick="editdata(${i})" >Edit</button> 
+                                <button class="btn btn-danger" id="delete" onclick="deletedata(${i})" >Delete</button>
+                            </td></tr>`)
+                }
+                $('#refresh').show()
+                // $("#show").hide()
+            },
+            status:function(error,status){
+                console.log(error)
+            }
+        })})
+        
+        
+    </script>
+    
+</body>
+</html>

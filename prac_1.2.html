@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.js"
+        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <ul id="products">
+
+    </ul>
+    <script>
+        let array=[{"name":"toy","price":40},
+        {"name":"keyboard","price":60}]
+
+        // $(document).ready(function(){
+        //     $(array).each((index,data)=>{
+        //         $('<li></li>').text(data.name).appendTo('#products')
+        //     })
+        // })
+
+        $(document).ready(function(){
+           $(array).each((index,data)=>{
+            $('<li></li>').html($('<button></button>').text(data.name +"  "+data.price)
+            .attr("id","products"+(index+1)).click(function(){
+                alert(data.price)
+            })
+            ).appendTo('#products')
+           })
+        })
+    </script>
+</body>
+</html>

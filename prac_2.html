@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.4.js"
+        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <form action="">
+        <label for="">
+            <h3>Please select your technology :</h3>
+        </label> <br>
+        <input type="radio" class="form-check-input" name="lang" id="php" value="php">PHP
+        <input type="radio" class="form-check-input" name="lang" id="asp2" value="asp2">ASP.NET
+        <input type="radio" class="form-check-input" name="lang" id="asp" value="asp">ASP
+        <input type="radio" class="form-check-input" name="lang" id="jsp" value="jsp">JSP
+        <input type="radio" class="form-check-input" name="lang" id="perl" value="perl">PERL
+        <input type="radio" class="form-check-input" name="lang" id="cold" value="cold">COLD FUSION
+        <input type="radio" class="form-check-input" name="lang" id="other" value="other">OTHER
+    </form>
+
+    <h3>You have selected :- 
+        <!-- <span id="languages"></span> -->
+        <span id="php1">PHP</span>
+        <span id="asp1">ASP.NET</span>
+        <span id="asp3">ASP</span>
+        <span id="jsp1">JSP</span>
+        <span id="perl1">PERL</span>
+        <span id="cold1">COLD FUSION</span>
+        <span id="other1">OTHER</span>
+    </h3>
+
+    <script>
+
+        $(document).ready(function(){
+            $('span').hide()
+
+            $('#php').click(function(){
+                $('#php1').show()
+                $('#asp1').hide()
+                $('#asp3').hide()
+                $('#jsp1').hide()
+                $('#perl1').hide()
+                $('#cold1').hide()
+                $('#other1').hide()
+            })
+            $('#asp2').click(function(){
+                $('#php1').hide()
+                $('#asp1').show()
+                $('#asp3').hide()
+                $('#jsp1').hide()
+                $('#perl1').hide()
+                $('#cold1').hide()
+                $('#other1').hide()
+            })
+            $('#asp').click(function(){
+                $('#php1').hide()
+                $('#asp1').hide()
+                $('#asp3').show()
+                $('#jsp1').hide()
+                $('#perl1').hide()
+                $('#cold1').hide()
+                $('#other1').hide()
+            })
+            $('#jsp').click(function(){
+                $('#php1').hide()
+                $('#asp1').hide()
+                $('#asp3').hide()
+                $('#jsp1').show()
+                $('#perl1').hide()
+                $('#cold1').hide()
+                $('#other1').hide()
+            })
+            $('#perl').click(function(){
+                $('#php1').hide()
+                $('#asp1').hide()
+                $('#asp3').hide()
+                $('#jsp1').hide()
+                $('#perl1').show()
+                $('#cold1').hide()
+                $('#other1').hide()
+            })
+            $('#cold').click(function(){
+                $('#php1').hide()
+                $('#asp1').hide()
+                $('#asp3').hide()
+                $('#jsp1').hide()
+                $('#perl1').hide()
+                $('#cold1').show()
+                $('#other1').hide()
+            })
+            $('#other').click(function(){
+                $('#php1').hide()
+                $('#asp1').hide()
+                $('#asp3').hide()
+                $('#jsp1').hide()
+                $('#perl1').hide()
+                $('#cold1').hide()
+                $('#other1').show()
+            })
+
+
+        })
+
+        // $(document).ready(function () {
+        //     $(':radio').change(function () {
+        //         let sc = $('input[type=radio]:checked').val();
+        //         $('#languages').text(sc);
+        //     })
+        // })
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+        </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+        </script>
+</body>
+
+</html>
